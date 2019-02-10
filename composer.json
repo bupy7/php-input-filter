@@ -1,7 +1,7 @@
 {
     "name": "bupy7/php-input-filter",
     "description": "A simple and powerful input filter for any PHP application",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "BSD-3-Clause",
     "keywoards": [
         "php",

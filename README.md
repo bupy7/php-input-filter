@@ -8,7 +8,7 @@ php-input-filter
 [![Build Status](https://travis-ci.org/bupy7/php-input-filter.svg?branch=master)](https://travis-ci.org/bupy7/php-input-filter)
 [![Coverage Status](https://coveralls.io/repos/github/bupy7/php-input-filter/badge.svg?branch=master)](https://coveralls.io/github/bupy7/php-input-filter?branch=master)
 
-A simple and powerful input filter for any PHP application.
+A simple and powerful input filter for any PHP application. It's like a form, but not the same. ;)
 
 Installation
 ------------
@@ -35,9 +35,9 @@ Form:
 ```php
 // module/Application/src/Form/SignInForm.php
 
-use Bupy7\InputFilter\InputFilterAbstract;
+use Bupy7\InputFilter\FormAbstract;
 
-class SignInForm extends InputFilterAbstract
+class SignInForm extends FormAbstract
 {
     /**
      * @var string 
@@ -101,11 +101,11 @@ By default using `FormAbstract::DEFAULT_SCENARIO` but you can use your customs o
 ```php
 // module/Application/src/Form/SignInForm.php
 
-use Bupy7\InputFilter\InputFilterAbstract;
+use Bupy7\InputFilter\FormAbstract;
 
-class SignInForm extends InputFilterAbstract
+class SignInForm extends FormAbstract
 {
-    const SCENARIO_PASSWORD = 2;
+    const SCENARIO_PASSWORD = 'password';
 
     /**
      * @var string
