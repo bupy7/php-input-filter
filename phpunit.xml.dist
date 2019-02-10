@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.5/phpunit.xsd"
+    bootstrap="./vendor/autoload.php"
+    verbose="true"
+    colors="true">
+
+  <testsuites>
+    <testsuite name="Bupy7\\InputFilter">
+      <file>./test/InputFilter/InputFilterTest.php</file>
+      <file>./test/FormAbstractTest.php</file>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <whitelist>
+      <directory suffix=".php">./src</directory>
+    </whitelist>
+  </filter>
+  <logging>
+    <log type="coverage-html" target="build/coverage"/>
+    <log type="coverage-clover" target="build/logs/clover.xml"/>
+  </logging>
+</phpunit>
