@@ -4,7 +4,7 @@ php-input-filter
 1.0.2 [2020-02-11]
 ------------------
 
-- Add support of PHP 7.4.
+- Added support of PHP 7.4.
 
 1.0.1 [2019-02-11]
 ------------------
