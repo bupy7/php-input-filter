@@ -2,11 +2,10 @@
 
 namespace Bupy7\InputFilter\Test\Asset;
 
-use Bupy7\InputFilter\InputFilter\ErrorMessageInterface;
-use Bupy7\InputFilter\InputFilter\InputFilter;
-use Laminas\InputFilter\InputFilterInterface;
+use Bupy7\InputFilter\InputFilter;
+use Bupy7\InputFilter\InputFilterInterface;
 
-abstract class BaseFilter implements InputFilterInterface, ErrorMessageInterface
+abstract class BaseFilter implements InputFilterInterface
 {
     private InputFilter $inputFilter;
 
@@ -93,14 +92,11 @@ abstract class BaseFilter implements InputFilterInterface, ErrorMessageInterface
         return $this->inputFilter->count();
     }
 
-    public function setMessage(string $name, string $message): ErrorMessageInterface
+    public function setMessage(string $name, string $message): void
     {
-        return $this->inputFilter->setMessage($name, $message);
+        $this->inputFilter->setMessage($name, $message);
     }
-
-    /**
-     * @return InputFilterInterface[]|\Laminas\InputFilter\InputInterface[]
-     */
+    
     public function getInputs()
     {
         return $this->inputFilter->getInputs();

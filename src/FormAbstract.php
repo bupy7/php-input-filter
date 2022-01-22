@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace Bupy7\InputFilter;
 
-use Bupy7\InputFilter\InputFilter\InputFilter;
-use Bupy7\InputFilter\Exception\InvalidCallException;
-use Bupy7\InputFilter\Exception\UnknownPropertyException;
-use Bupy7\InputFilter\InputFilter\ErrorMessageInterface;
-use Bupy7\InputFilter\Exception\NotSupportedException;
-use Laminas\InputFilter\InputFilterInterface;
-use function method_exists;
-use function get_class;
-use function ucfirst;
-use function count;
 use function array_intersect;
 use function array_key_exists;
+use function count;
+use function get_class;
+use function method_exists;
+use function ucfirst;
 
 abstract class FormAbstract implements FormInterface
 {
@@ -87,17 +81,9 @@ abstract class FormAbstract implements FormInterface
      * Set error message for the input.
      * @param string $name
      * @param string $error
-     * @throws NotSupportedException
      */
     public function setError(string $name, string $error): void
     {
-        if (!$this->getInputFilter() instanceof ErrorMessageInterface) {
-            throw new NotSupportedException(sprintf(
-                'Method %s::%s() is not supported.',
-                get_class($this->getInputFilter()),
-                __FUNCTION__
-            ));
-        }
         $this->getInputFilter()->setMessage($name, $error);
     }
 

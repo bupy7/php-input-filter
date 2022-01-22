@@ -3,13 +3,12 @@
 namespace Bupy7\InputFilter\Test;
 
 use Bupy7\InputFilter\Test\Asset\EmptyForm;
-use Bupy7\InputFilter\Test\Asset\SignInFilter;
-use Bupy7\InputFilter\Test\Asset\SignInMethodForm;
-use Bupy7\InputFilter\Test\Asset\SignInAccessForm;
-use Bupy7\InputFilter\Test\Asset\SignInPropertyForm;
 use Bupy7\InputFilter\Test\Asset\NullForm;
 use Bupy7\InputFilter\Test\Asset\ProfileForm;
-use Laminas\InputFilter\InputFilter as LaminasInputFilter;
+use Bupy7\InputFilter\Test\Asset\SignInAccessForm;
+use Bupy7\InputFilter\Test\Asset\SignInFilter;
+use Bupy7\InputFilter\Test\Asset\SignInMethodForm;
+use Bupy7\InputFilter\Test\Asset\SignInPropertyForm;
 
 final class FormAbstractTest extends TestCase
 {
@@ -175,7 +174,7 @@ final class FormAbstractTest extends TestCase
 
     public function testInvalidGet(): void
     {
-        $this->expectException('Bupy7\InputFilter\Exception\UnknownPropertyException');
+        $this->expectException('Bupy7\InputFilter\UnknownPropertyException');
 
         $signInForm = new SignInMethodForm();
         $signInForm->setValues([
@@ -194,7 +193,7 @@ final class FormAbstractTest extends TestCase
 
     public function testInvalidSet(): void
     {
-        $this->expectException('Bupy7\InputFilter\Exception\UnknownPropertyException');
+        $this->expectException('Bupy7\InputFilter\UnknownPropertyException');
 
         $signInForm = new SignInMethodForm();
         $signInForm->unknownEmail = 'test@gmail.com';
@@ -202,7 +201,7 @@ final class FormAbstractTest extends TestCase
 
     public function testWriteOnly(): void
     {
-        $this->expectException('Bupy7\InputFilter\Exception\InvalidCallException');
+        $this->expectException('Bupy7\InputFilter\InvalidCallException');
 
         $signInForm = new SignInAccessForm();
         $signInForm->password = '12q34e56t78';
@@ -212,7 +211,7 @@ final class FormAbstractTest extends TestCase
 
     public function testReadOnly(): void
     {
-        $this->expectException('Bupy7\InputFilter\Exception\InvalidCallException');
+        $this->expectException('Bupy7\InputFilter\InvalidCallException');
 
         $signInForm = new SignInAccessForm();
         $signInForm->email = 'test@gmail.com';
@@ -240,20 +239,5 @@ final class FormAbstractTest extends TestCase
 
         $profileForm->setError('age', 'Today you can only to set age between 50 and 80.');
         $this->assertTrue($profileForm->hasErrors());
-    }
-
-    public function testSetMessageException(): void
-    {
-        $this->expectException('Bupy7\InputFilter\Exception\NotSupportedException');
-
-        $profileForm = new ProfileForm();
-        $profileForm->setInputFilter(new LaminasInputFilter());
-        $profileForm->setValues([
-            'age' => 23,
-        ]);
-
-        $this->assertTrue($profileForm->isValid());
-
-        $profileForm->setError('email', 'Some error message.');
     }
 }
