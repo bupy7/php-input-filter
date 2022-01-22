@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test;
 
@@ -7,36 +7,32 @@ use Bupy7\InputFilter\Test\Asset\SignInFilter;
 use Bupy7\InputFilter\Test\Asset\SignInMethodForm;
 use Bupy7\InputFilter\Test\Asset\SignInAccessForm;
 use Bupy7\InputFilter\Test\Asset\SignInPropertyForm;
-use Bupy7\InputFilter\Test\Asset\SignInScenarioForm;
 use Bupy7\InputFilter\Test\Asset\NullForm;
 use Bupy7\InputFilter\Test\Asset\ProfileForm;
-use Zend\InputFilter\InputFilter;
+use Laminas\InputFilter\InputFilter as LaminasInputFilter;
 
-/**
- * @author Vasilij Belosludcev <https://github.com/bupy7>
- */
-class FormAstractTest extends TestCase
+final class FormAbstractTest extends TestCase
 {
-    public function testInstanceInputFilter()
+    public function testInstanceInputFilter(): void
     {
-        $signInForm = new SignInPropertyForm;
-        $signInForm->setInputFilter(new SignInFilter);
+        $signInForm = new SignInPropertyForm();
+        $signInForm->setInputFilter(new SignInFilter());
         $this->assertInstanceOf(SignInFilter::class, $signInForm->getInputFilter());
-        $signInForm->setValues([]);
+        $signInForm->setValues(['password' => '']);
         $this->assertFalse($signInForm->isValid());
     }
 
-    public function testEmptyInputs()
+    public function testEmptyInputs(): void
     {
-        $emptyForm = new EmptyForm;
+        $emptyForm = new EmptyForm();
         $emptyForm->setValues([]);
         $this->assertTrue($emptyForm->isValid());
     }
 
-    public function testValidInputs()
+    public function testValidInputs(): void
     {
         // properties
-        $signInForm = new SignInPropertyForm;
+        $signInForm = new SignInPropertyForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
             'password' => '12q34e56t78',
@@ -44,7 +40,7 @@ class FormAstractTest extends TestCase
         $this->assertTrue($signInForm->isValid());
         $this->assertFalse($signInForm->hasErrors());
         // methods
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
             'password' => '12q34e56t78',
@@ -53,10 +49,10 @@ class FormAstractTest extends TestCase
         $this->assertFalse($signInForm->hasErrors());
     }
 
-    public function testInvalidInputs()
+    public function testInvalidInputs(): void
     {
         // properties
-        $signInForm = new SignInPropertyForm;
+        $signInForm = new SignInPropertyForm();
         $signInForm->setValues([
             'email' => 'test@gmail.never',
             'password' => '',
@@ -66,7 +62,7 @@ class FormAstractTest extends TestCase
         $this->assertTrue(!empty($errors));
         $this->assertTrue($signInForm->hasErrors());
         // methods
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.never',
             'password' => '',
@@ -77,17 +73,17 @@ class FormAstractTest extends TestCase
         $this->assertTrue($signInForm->hasErrors());
     }
 
-    public function testValidGroupInputs()
+    public function testValidGroupInputs(): void
     {
         // properties
-        $signInForm = new SignInPropertyForm;
+        $signInForm = new SignInPropertyForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
         ]);
         $this->assertTrue($signInForm->isValid('email'));
         $this->assertFalse($signInForm->hasErrors());
         // methods
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
         ]);
@@ -95,10 +91,10 @@ class FormAstractTest extends TestCase
         $this->assertFalse($signInForm->hasErrors());
     }
 
-    public function testInvalidGroupInputs()
+    public function testInvalidGroupInputs(): void
     {
         // properties
-        $signInForm = new SignInPropertyForm;
+        $signInForm = new SignInPropertyForm();
         $signInForm->setValues([
             'email' => 'test@gmail.never',
         ]);
@@ -107,7 +103,7 @@ class FormAstractTest extends TestCase
         $this->assertTrue(!empty($errors));
         $this->assertTrue($signInForm->hasErrors());
         // methods
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.never',
         ]);
@@ -117,10 +113,10 @@ class FormAstractTest extends TestCase
         $this->assertTrue($signInForm->hasErrors());
     }
 
-    public function testValidOutputs()
+    public function testValidOutputs(): void
     {
         // properties
-        $signInForm = new SignInPropertyForm;
+        $signInForm = new SignInPropertyForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
         ]);
@@ -130,7 +126,7 @@ class FormAstractTest extends TestCase
         $this->assertEquals('12q34e56t78', $values['password']);
         $this->assertEquals('12q34e56t78', $signInForm->password);
         // methods
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
         ]);
@@ -142,10 +138,10 @@ class FormAstractTest extends TestCase
         $this->assertEquals('12q34e56t78', $signInForm->password);
     }
 
-    public function testInvalidOutputs()
+    public function testInvalidOutputs(): void
     {
         // properties
-        $signInForm = new SignInPropertyForm;
+        $signInForm = new SignInPropertyForm();
         $signInForm->setValues([
             'email' => 'test@gmail.co2m',
         ]);
@@ -155,7 +151,7 @@ class FormAstractTest extends TestCase
         $this->assertEquals('12q34e56t78', $values['password']);
         $this->assertEquals('12q34e56t78', $signInForm->password);
         // methods
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.co2m',
         ]);
@@ -167,9 +163,9 @@ class FormAstractTest extends TestCase
         $this->assertEquals('12q34e56t78', $signInForm->getPassword());
     }
 
-    public function testValidGet()
+    public function testValidGet(): void
     {
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
         ]);
@@ -177,12 +173,11 @@ class FormAstractTest extends TestCase
         $this->assertEquals('test@gmail.com', $signInForm->email);
     }
 
-    /**
-     * @expectedException \Bupy7\InputFilter\Exception\UnknownPropertyException
-     */
-    public function testInvalidGet()
+    public function testInvalidGet(): void
     {
-        $signInForm = new SignInMethodForm;
+        $this->expectException('Bupy7\InputFilter\Exception\UnknownPropertyException');
+
+        $signInForm = new SignInMethodForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
         ]);
@@ -190,60 +185,42 @@ class FormAstractTest extends TestCase
         $this->assertEquals('test@gmail.com', $signInForm->unknownEmail);
     }
 
-    public function testValidSet()
+    public function testValidSet(): void
     {
-        $signInForm = new SignInMethodForm;
+        $signInForm = new SignInMethodForm();
         $signInForm->email = 'test@gmail.com';
         $this->assertTrue($signInForm->isValid('email'));
     }
 
-    /**
-     * @expectedException \Bupy7\InputFilter\Exception\UnknownPropertyException
-     */
-    public function testInvalidSet()
+    public function testInvalidSet(): void
     {
-        $signInForm = new SignInMethodForm;
+        $this->expectException('Bupy7\InputFilter\Exception\UnknownPropertyException');
+
+        $signInForm = new SignInMethodForm();
         $signInForm->unknownEmail = 'test@gmail.com';
     }
 
-    /**
-     * @expectedException \Bupy7\InputFilter\Exception\InvalidCallException
-     */
-    public function testWriteOnly()
+    public function testWriteOnly(): void
     {
-        $signInForm = new SignInAccessForm;
+        $this->expectException('Bupy7\InputFilter\Exception\InvalidCallException');
+
+        $signInForm = new SignInAccessForm();
         $signInForm->password = '12q34e56t78';
         $this->assertTrue($signInForm->isValid('password'));
         $this->assertEquals('12q34e56t78', $signInForm->password);
     }
 
-    /**
-     * @expectedException \Bupy7\InputFilter\Exception\InvalidCallException
-     */
-    public function testReadOnly()
+    public function testReadOnly(): void
     {
-        $signInForm = new SignInAccessForm;
+        $this->expectException('Bupy7\InputFilter\Exception\InvalidCallException');
+
+        $signInForm = new SignInAccessForm();
         $signInForm->email = 'test@gmail.com';
     }
 
-    public function testScenario()
+    public function testNullValues(): void
     {
-        // DEFAULT scenario
-        $signInForm = new SignInScenarioForm;
-        $signInForm->email = 'test@gmail.com';
-        $signInForm->password = '12q34e56t78';
-        $this->assertTrue($signInForm->isValid());
-        $this->assertEquals(SignInScenarioForm::SCENARIO_DEFAULT, $signInForm->getScenario());
-        // PASSWORD scenario
-        $signInForm->setScenario(SignInScenarioForm::SCENARIO_PASSWORD);
-        $signInForm->email = null;
-        $this->assertTrue($signInForm->isValid());
-        $this->assertEquals(SignInScenarioForm::SCENARIO_PASSWORD, $signInForm->getScenario());
-    }
-
-    public function testNullValues()
-    {
-        $signInForm = new NullForm;
+        $signInForm = new NullForm();
         $signInForm->setValues([
             'email' => 'test@gmail.com',
             'password' => '',
@@ -252,9 +229,9 @@ class FormAstractTest extends TestCase
         $this->assertNull($signInForm->password);
     }
 
-    public function testSetError()
+    public function testSetError(): void
     {
-        $profileForm = new ProfileForm;
+        $profileForm = new ProfileForm();
         $profileForm->setValues([
             'age' => 23,
         ]);
@@ -265,19 +242,18 @@ class FormAstractTest extends TestCase
         $this->assertTrue($profileForm->hasErrors());
     }
 
-    /**
-     * @expectedException \Bupy7\InputFilter\Exception\NotSupportedException
-     */
-    public function testSetMessageException()
+    public function testSetMessageException(): void
     {
-        $signInFilter = new ProfileForm;
-        $signInFilter->setInputFilter(new InputFilter);
-        $signInFilter->setValues([
+        $this->expectException('Bupy7\InputFilter\Exception\NotSupportedException');
+
+        $profileForm = new ProfileForm();
+        $profileForm->setInputFilter(new LaminasInputFilter());
+        $profileForm->setValues([
             'age' => 23,
         ]);
 
-        $this->assertTrue($signInFilter->isValid());
+        $this->assertTrue($profileForm->isValid());
 
-        $signInFilter->setError('email', 'Some error message.');
+        $profileForm->setError('email', 'Some error message.');
     }
 }

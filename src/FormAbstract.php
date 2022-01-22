@@ -1,51 +1,35 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter;
 
-use Zend\InputFilter\BaseInputFilter;
 use Bupy7\InputFilter\InputFilter\InputFilter;
 use Bupy7\InputFilter\Exception\InvalidCallException;
 use Bupy7\InputFilter\Exception\UnknownPropertyException;
 use Bupy7\InputFilter\InputFilter\ErrorMessageInterface;
 use Bupy7\InputFilter\Exception\NotSupportedException;
+use Laminas\InputFilter\InputFilterInterface;
+use function method_exists;
+use function get_class;
+use function ucfirst;
+use function count;
+use function array_intersect;
+use function array_key_exists;
 
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-abstract class FormAbstract
+abstract class FormAbstract implements FormInterface
 {
-    /**
-     * Default scenario for inputs.
-     */
-    const SCENARIO_DEFAULT = 'default';
+    private ?InputFilterInterface $inputFilter = null;
 
-    /**
-     * @var BaseInputFilter
-     */
-    protected $inputFilter;
-    /**
-     * @var int|string The current scenario for inputs.
-     */
-    protected $scenario = self::SCENARIO_DEFAULT;
-
-    /**
-     * @param BaseInputFilter $inputFilter
-     * @return static
-     */
-    public function setInputFilter(BaseInputFilter $inputFilter)
+    public function setInputFilter(InputFilterInterface $inputFilter): FormAbstract
     {
         $this->inputFilter = $inputFilter;
         $this->attachInputs();
         return $this;
     }
 
-    /**
-     * @return BaseInputFilter
-     */
-    public function getInputFilter()
+    public function getInputFilter(): InputFilterInterface
     {
         if ($this->inputFilter === null) {
-            $this->setInputFilter(new InputFilter);
+            $this->setInputFilter(new InputFilter());
         }
         return $this->inputFilter;
     }
@@ -55,13 +39,12 @@ abstract class FormAbstract
      * @param string|array|null $name
      * @return boolean
      */
-    public function isValid($name = null)
+    public function isValid($name = null): bool
     {
-        $this->resetInputFilter()
-            ->getInputFilter()
-            ->setData($this->getValues());
+        $this->resetInputFilter();
+        $this->getInputFilter()->setData($this->getValues());
 
-        $names = $this->findScenario();
+        $names = $this->getInputNames();
         if ($name !== null) {
             $names = array_intersect($names, (array)$name);
         }
@@ -76,26 +59,24 @@ abstract class FormAbstract
     /**
      * Setting values into input filter.
      * @param array $values
-     * @return static
      */
-    public function setValues($values)
+    public function setValues(array $values): void
     {
-        foreach ($this->findScenario() as $name) {
+        foreach ($this->getInputNames() as $name) {
             if (array_key_exists($name, $values)) {
                 $this->$name = $values[$name];
             }
         }
-        return $this;
     }
 
     /**
      * Returns values from the input filter.
      * @return array
      */
-    public function getValues()
+    public function getValues(): array
     {
         $values = [];
-        foreach ($this->findScenario() as $name) {
+        foreach ($this->getInputNames() as $name) {
             $values[$name] = $this->$name;
         }
         return $values;
@@ -105,10 +86,9 @@ abstract class FormAbstract
      * Set error message for the input.
      * @param string $name
      * @param string $error
-     * @return static
      * @throws NotSupportedException
      */
-    public function setError($name, $error)
+    public function setError(string $name, string $error): void
     {
         if (!$this->getInputFilter() instanceof ErrorMessageInterface) {
             throw new NotSupportedException(sprintf(
@@ -118,14 +98,13 @@ abstract class FormAbstract
             ));
         }
         $this->getInputFilter()->setMessage($name, $error);
-        return $this;
     }
 
     /**
      * List of errors where a key is name of field and value is array messages.
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->getInputFilter()->getMessages();
     }
@@ -134,9 +113,9 @@ abstract class FormAbstract
      * Alert has errors about.
      * @return bool
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
-        return !empty($this->getInputFilter()->getInvalidInput());
+        return count($this->getInputFilter()->getInvalidInput()) !== 0;
     }
 
     /**
@@ -175,24 +154,6 @@ abstract class FormAbstract
     }
 
     /**
-     * @param int|string $scenario
-     * @return static
-     */
-    public function setScenario($scenario)
-    {
-        $this->scenario = $scenario;
-        return $this;
-    }
-
-    /**
-     * @return int|string
-     */
-    public function getScenario()
-    {
-        return $this->scenario;
-    }
-
-    /**
      * List of inputs form.
      * Each an element of an array should be like follow:
      * [
@@ -206,67 +167,38 @@ abstract class FormAbstract
      *     // and etc
      * ]
      * @return array
-     * @see \Zend\InputFilter\InputInterface
+     * @see \Laminas\InputFilter\InputInterface
      */
-    protected function inputs()
-    {
-        return [];
-    }
+    abstract protected function inputs(): array;
 
     /**
      * Attaching declaring inputs into input filter.
-     * @return static
      */
-    protected function attachInputs()
+    private function attachInputs(): void
     {
         foreach ($this->inputs() as $input) {
             $this->getInputFilter()->add($input);
         }
-        return $this;
     }
 
     /**
-     * Collection of scenarios input names.
-     * Each an element of a scenario should be like follow:
-     * [
-     *      self::SCENARIO_EXAMPLE_1 => ['email', 'password'],
-     *      self::SCENARIO_EXAMPLE_2 => ['person', 'email', 'password'],
-     * ]
-     * By default uses input names from declared inputs as SCENARIO_DEFAULT.
+     * @since 2.0.0
      * @return array
      */
-    protected function scenarios()
+    private function getInputNames(): array
     {
-        $scenarios = [self::SCENARIO_DEFAULT => []];
+        $inputNames = [];
         foreach ($this->getInputFilter()->getInputs() as $input) {
-            $scenarios[self::SCENARIO_DEFAULT][] = $input->getName();
+            $inputNames[] = $input->getName();
         }
-        return $scenarios;
+        return $inputNames;
     }
 
-    /**
-     * Return current scenario input names.
-     * @param int|string $scenario
-     * @return array
-     */
-    protected function findScenario($scenario = null)
-    {
-        $scenarios = $this->scenarios();
-        if ($scenario === null) {
-            $scenario = $this->getScenario();
-        }
-        return isset($scenarios[$scenario]) ? $scenarios[$scenario] : [];
-    }
-
-    /**
-     * @return static
-     */
-    protected function resetInputFilter()
+    private function resetInputFilter(): void
     {
         foreach ($this->getInputFilter()->getInputs() as $input) {
             $this->getInputFilter()->remove($input->getName());
         }
         $this->attachInputs();
-        return $this;
     }
 }

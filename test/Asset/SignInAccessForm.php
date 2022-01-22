@@ -1,42 +1,36 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\Asset;
 
 use Bupy7\InputFilter\FormAbstract;
 
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-class SignInAccessForm extends FormAbstract
+final class SignInAccessForm extends FormAbstract
 {
     /**
-     * @var string
+     * @var string|mixed
      */
-    protected $email;
+    private $email;
     /**
-     * @var string
+     * @var string|mixed
      */
-    protected $password;
+    private $password;
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
-        return $this->email;
+        return (string)$this->email;
     }
 
     /**
-     * @param string $password
-     * @return static
+     * @param string|mixed $password
+     * @return SignInAccessForm
      */
-    public function setPassword($password)
+    public function setPassword($password): SignInAccessForm
     {
-        $this->password = $password;
+        $this->password = (string)$password;
         return $this;
     }
 
-    protected function inputs()
+    protected function inputs(): array
     {
         return [
             [

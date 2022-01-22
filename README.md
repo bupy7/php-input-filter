@@ -10,6 +10,8 @@ php-input-filter
 
 A simple and powerful input filter for any PHP application. It's like a form, but not the same. ;)
 
+Supporting PHP from 5.6 up to 8.1.
+
 Installation
 ------------
 

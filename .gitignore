@@ -1,7 +1,8 @@
 .DS_Store
 /vendor
 /composer.lock
-/phpunit.xml
 /build
 /.php_cs.cache
 /.idea
+/docker-compose.yml
+/.phpunit.result.cache

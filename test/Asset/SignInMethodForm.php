@@ -1,39 +1,29 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\Asset;
 
 use Bupy7\InputFilter\FormAbstract;
 
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-class SignInMethodForm extends FormAbstract
+final class SignInMethodForm extends FormAbstract
 {
     /**
-     * @var string
+     * @var string|mixed
      */
-    protected $email;
+    private $email;
     /**
-     * @var string
+     * @var string|mixed
      */
-    protected $password;
+    private $password;
 
-    /**
-     * @param string $email
-     * @return static
-     */
-    public function setEmail($email)
+    public function setEmail($email): SignInMethodForm
     {
-        $this->email = $email;
+        $this->email = (string)$email;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
-        return $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -46,15 +36,12 @@ class SignInMethodForm extends FormAbstract
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPassword()
+    public function getPassword(): string
     {
-        return $this->password;
+        return (string)$this->password;
     }
 
-    protected function inputs()
+    protected function inputs(): array
     {
         return [
             [

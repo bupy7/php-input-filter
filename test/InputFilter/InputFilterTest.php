@@ -1,18 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\InputFilter;
 
 use Bupy7\InputFilter\Test\Asset\ProfileFilter;
 use Bupy7\InputFilter\Test\TestCase;
 
-/**
- * @author Vasilij Belosludcev <https://github.com/bupy7>
- */
-class InputFilterTest extends TestCase
+final class InputFilterTest extends TestCase
 {
-    public function testSetMessage()
+    public function testSetMessage(): void
     {
-        $profileFilter = new ProfileFilter;
+        $profileFilter = new ProfileFilter();
         $profileFilter->setData(['age' => 23]);
 
         $this->assertTrue($profileFilter->isValid());
@@ -25,9 +22,9 @@ class InputFilterTest extends TestCase
         $this->assertEquals($message, $profileFilter->getMessages()['age'][0]);
     }
 
-    public function testSetMessageForNotExistsInput()
+    public function testSetMessageForNotExistsInput(): void
     {
-        $profileFilter = new ProfileFilter;
+        $profileFilter = new ProfileFilter();
         $profileFilter->setData(['age' => 23]);
 
         $this->assertTrue($profileFilter->isValid());
@@ -45,9 +42,9 @@ class InputFilterTest extends TestCase
         );
     }
 
-    public function testSetMessageForInvalidInput()
+    public function testSetMessageForInvalidInput(): void
     {
-        $profileFilter = new ProfileFilter;
+        $profileFilter = new ProfileFilter();
         $profileFilter->setData(['age' => 150]);
 
         $this->assertFalse($profileFilter->isValid());

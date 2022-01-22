@@ -1,24 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\Asset;
 
 use Bupy7\InputFilter\FormAbstract;
 
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-class SignInPropertyForm extends FormAbstract
+final class SignInPropertyForm extends FormAbstract
 {
     /**
-     * @var string
+     * @var string|mixed
      */
     public $email;
     /**
-     * @var string
+     * @var string|mixed
      */
     public $password;
 
-    protected function inputs()
+    protected function inputs(): array
     {
         return [
             [

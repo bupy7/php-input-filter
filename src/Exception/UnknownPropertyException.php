@@ -1,12 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Exception;
 
-use Exception;
+use RuntimeException;
 
-/**
- * @author Belosludcev Vasily <https://github.com/bupy7>
- */
-class UnknownPropertyException extends Exception
+final class UnknownPropertyException extends RuntimeException
 {
 }

@@ -1,17 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\Asset;
 
-use Bupy7\InputFilter\InputFilter\InputFilter;
-
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-class ProfileFilter extends InputFilter
+final class ProfileFilter extends BaseFilter
 {
     public function __construct()
     {
-        $this->add([
+        parent::__construct([[
             'name' => 'age',
             'validators' => [
                 [
@@ -25,6 +20,6 @@ class ProfileFilter extends InputFilter
                     ],
                 ],
             ],
-        ]);
+        ]]);
     }
 }

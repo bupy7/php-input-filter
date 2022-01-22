@@ -1,18 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\InputFilter;
 
-use Zend\InputFilter\InputFilter as BaseInputFilter;
+use Laminas\InputFilter\InputFilter as BaseInputFilter;
 
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-class InputFilter extends BaseInputFilter implements ErrorMessageInterface
+final class InputFilter extends BaseInputFilter implements ErrorMessageInterface
 {
     /**
-     * {@inheritDoc}
+     * @param string $name
+     * @param string $message
+     * @return InputFilter|ErrorMessageInterface
      */
-    public function setMessage($name, $message)
+    public function setMessage(string $name, string $message): ErrorMessageInterface
     {
         if (!$this->has($name)) {
             return $this;

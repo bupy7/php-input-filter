@@ -1,20 +1,17 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\Asset;
 
 use Bupy7\InputFilter\FormAbstract;
 
-/**
- * @author Vasily Belosloodcev <https://github.com/bupy7>
- */
-class ProfileForm extends FormAbstract
+final class ProfileForm extends FormAbstract
 {
     /**
-     * @var int
+     * @var int|mixed
      */
     public $age;
 
-    protected function inputs()
+    protected function inputs(): array
     {
         return [
             [

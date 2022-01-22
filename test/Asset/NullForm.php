@@ -1,24 +1,21 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bupy7\InputFilter\Test\Asset;
 
 use Bupy7\InputFilter\FormAbstract;
 
-/**
- * @author Belosludcev Vasily <https://github.com/bupy7>
- */
-class NullForm extends FormAbstract
+final class NullForm extends FormAbstract
 {
     /**
-     * @var string
+     * @var string|mixed
      */
     public $email;
     /**
-     * @var string
+     * @var string|mixed
      */
     public $password;
 
-    protected function inputs()
+    protected function inputs(): array
     {
         return [
             [
