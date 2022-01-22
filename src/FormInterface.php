@@ -10,7 +10,7 @@ namespace Bupy7\InputFilter;
 interface FormInterface
 {
     /**
-     * @param string|array|null $name
+     * @param string|string[]|null $name
      * @return boolean
      */
     public function isValid($name = null): bool;

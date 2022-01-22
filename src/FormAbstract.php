@@ -38,7 +38,7 @@ abstract class FormAbstract implements FormInterface
 
     /**
      * Validate inputs.
-     * @param string|array|null $name
+     * @param string|string[]|null $name
      * @return boolean
      */
     public function isValid($name = null): bool
