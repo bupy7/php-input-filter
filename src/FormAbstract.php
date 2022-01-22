@@ -21,11 +21,10 @@ abstract class FormAbstract implements FormInterface
 {
     private ?InputFilterInterface $inputFilter = null;
 
-    public function setInputFilter(InputFilterInterface $inputFilter): FormAbstract
+    public function setInputFilter(InputFilterInterface $inputFilter): void
     {
         $this->inputFilter = $inputFilter;
         $this->attachInputs();
-        return $this;
     }
 
     public function getInputFilter(): InputFilterInterface
