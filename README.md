@@ -94,6 +94,23 @@ if ($this->getRequest()->isPost()) {
 // to do something next
 ```
 
+Testing
+---
+
+Run tests:
+
+```
+$ ./vendor/bin/phpunit --no-coverage
+```
+
+Run tests with coverage:
+
+```
+$ XDEBUG_MODE=coverage ./vendor/bin/phpunit
+```
+
+HTML coverage path: `build/coverage/index.html`
+
 Links
 -----
 

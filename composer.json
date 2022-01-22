@@ -38,6 +38,6 @@
         }
     },
     "scripts": {
-        "cs:fix": "./vendor/bin/php-cs-fixer fix --config=./phpcs.php"
+        "cs:fix": "./vendor/bin/php-cs-fixer fix --config=./phpcs.php --verbose"
     }
 }
