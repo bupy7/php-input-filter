@@ -96,7 +96,7 @@ abstract class BaseFilter implements InputFilterInterface
     {
         $this->inputFilter->setMessage($name, $message);
     }
-    
+
     public function getInputs()
     {
         return $this->inputFilter->getInputs();
