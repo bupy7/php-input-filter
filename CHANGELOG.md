@@ -1,6 +1,11 @@
 php-input-filter
 ===
 
+2.0.1 [2023-01-29]
+---
+
+- Added supporting of PHP up to 8.2.
+
 2.0.0 [2022-01-23]
 ---
 

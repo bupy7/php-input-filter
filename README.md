@@ -1,5 +1,4 @@
-php-input-filter
-===
+# php-input-filter
 
 [![Stable Version](https://poser.pugx.org/bupy7/php-input-filter/v/stable)](https://packagist.org/packages/bupy7/php-input-filter)
 [![Build status](https://github.com/bupy7/php-input-filter/actions/workflows/build.yml/badge.svg)](https://github.com/bupy7/php-input-filter/actions/workflows/build.yml)
@@ -9,10 +8,9 @@ php-input-filter
 
 A simple and powerful input filter for any PHP application. It's alike a form, but not the same. ;)
 
-Supporting PHP from 7.4 up to 8.1.
+Supporting PHP from 7.4 up to 8.2.
 
-Installation
----
+## Installation
 
 The preferred way to install this extension is through composer:
 
@@ -28,8 +26,7 @@ or add
 
 to the `require` section of your composer.json file.
 
-Usage
----
+## Usage
 
 Form:
 
@@ -94,8 +91,7 @@ if ($this->getRequest()->isPost()) {
 // to do something next
 ```
 
-Testing
----
+## Testing
 
 Run tests:
 
@@ -111,8 +107,7 @@ $ XDEBUG_MODE=coverage ./vendor/bin/phpunit
 
 HTML coverage path: `build/coverage/index.html`
 
-Links
------
+## Links
 
 The `php-input-filter` was based on `laminas/laminas-inputfilter`, `laminas/laminas-validator`
 and `laminas/laminas-filter`.
@@ -121,7 +116,6 @@ and `laminas/laminas-filter`.
 - [Documentation of `laminas/laminas-validator`](https://docs.laminas.dev/laminas-validator/);
 - [Documentation of `laminas/laminas-filter`](https://docs.laminas.dev/laminas-filter/).
 
-License
--------
+## License
 
 `php-input-filter` is released under the BSD-3-Clause License.
