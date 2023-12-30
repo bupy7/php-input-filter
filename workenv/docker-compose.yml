@@ -5,10 +5,20 @@ services:
     build:
       context: workenv
       args:
-        - GITHUB_OAUTH_TOKEN=<YOUR_TOKEN>
+        - "GITHUB_OAUTH_TOKEN=<YOUR_TOKEN>"
+        # For Docker Desktop under macOS doesn't matter what IDs will be specified, because Docker works
+        # through virtualization, and you may comment "USER_UID" and "USER_GID" args.
+        # id -u
+        - "USER_UID=1000"
+        # id -g
+        - "USER_GID=1000"
     working_dir: /app
     tty: true
     volumes:
       - type: bind
         source: ./
         target: /app
+    extra_hosts:
+      # host.docker.internal doesn't necessary if you use Docker Desktop under macOS, because its
+      # specified automatically, and you may comment line below.
+      - "host.docker.internal:host-gateway"
