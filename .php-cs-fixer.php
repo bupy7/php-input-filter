@@ -11,7 +11,15 @@ $finder = Finder::create()
 
 $config = new Config();
 $config->setRules([
-    '@PSR12' => true,
+    '@PER-CS' => true,
+    'cast_spaces' => [
+        'space' => 'none',
+    ],
+    'single_line_empty_body' => false,
+    'trailing_comma_in_multiline' => [
+        'after_heredoc' => true,
+        'elements' => ['arrays'],
+    ],
 ]);
 $config->setFinder($finder);
 

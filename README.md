@@ -8,7 +8,7 @@
 
 A simple and powerful input filter for any PHP application. It's alike a form, but not the same. ;)
 
-Supporting PHP from 7.4 up to 8.x.
+Supporting PHP from 8.0 up to newest.
 
 ## Installation
 

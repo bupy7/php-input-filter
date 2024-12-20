@@ -23,11 +23,11 @@ final class ProfileForm extends FormAbstract
                         'name' => 'Digits',
                     ],
                     [
-                       'name' => 'Between',
-                       'options' => [
+                        'name' => 'Between',
+                        'options' => [
                             'min' => 1,
                             'max' => 100,
-                       ],
+                        ],
                     ],
                 ],
             ],

@@ -35,7 +35,7 @@ final class SignInPropertyForm extends FormAbstract
                 'filters' => [
                     [
                         'name' => 'StringTrim',
-                    ]
+                    ],
                 ],
             ],
         ];

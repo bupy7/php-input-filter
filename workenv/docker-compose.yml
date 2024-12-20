@@ -1,24 +1,17 @@
-version: '3'
-
 services:
   php-cli:
+    user: php-cli
     build:
       context: workenv
       args:
-        - "GITHUB_OAUTH_TOKEN=<YOUR_TOKEN>"
-        # For Docker Desktop under macOS doesn't matter what IDs will be specified, because Docker works
-        # through virtualization, and you may comment "USER_UID" and "USER_GID" args.
-        # id -u
-        - "USER_UID=1000"
-        # id -g
-        - "USER_GID=1000"
+        - "GITHUB_OAUTH_TOKEN="
+        # If you don't using Docker Desktop, but Docker Engine with Compose plugin, you should uncomment lines below
+        # and set-up "uid" and "gid" of your system user (see man of "id"). Try to run command "id -u" and "id -g".
+        # - "USER_UID=1000"
+        # - "USER_GID=1000"
     working_dir: /app
     tty: true
     volumes:
       - type: bind
         source: ./
         target: /app
-    extra_hosts:
-      # host.docker.internal doesn't necessary if you use Docker Desktop under macOS, because its
-      # specified automatically, and you may comment line below.
-      - "host.docker.internal:host-gateway"

@@ -50,7 +50,7 @@ final class SignInAccessForm extends FormAbstract
                 'filters' => [
                     [
                         'name' => 'StringTrim',
-                    ]
+                    ],
                 ],
             ],
         ];

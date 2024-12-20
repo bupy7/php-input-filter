@@ -61,7 +61,7 @@ final class SignInMethodForm extends FormAbstract
                 'filters' => [
                     [
                         'name' => 'StringTrim',
-                    ]
+                    ],
                 ],
             ],
         ];
